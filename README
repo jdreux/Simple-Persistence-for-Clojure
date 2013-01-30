@@ -1,4 +1,7 @@
-Simple Persistence for Clojure is a journal-based persistence library for Clojure programs. It follows "Prevalent system" design pattern.
+Simple Persistence for Clojure
+========================
+
+Simple Persistence for Clojure is a journal-based persistence library for Clojure programs. It follows the "Prevalent system" design pattern.
 
 The intended usage is assist you in making a prevalent system. Thus you work with your in-memory data and wrap every writing call into one of (apply-transaction*) macros.
 
