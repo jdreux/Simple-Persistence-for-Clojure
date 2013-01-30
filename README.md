@@ -27,7 +27,7 @@ Probably blocking of writes is not important now, when the most of today compute
 Usage examples
 ---------------
 
-1. first run
+First run:
 
 	(use 'persister.core)
 
@@ -62,7 +62,7 @@ Usage examples
 
 	[#<Ref@5976c2: 23> #<Ref@183e7de: 12> #<Ref@112e7f7: {:a :bb, "key" #{:val2 "val1"}}>]
 
-2. the second run
+Second run:
 
 	(use 'persister.core)
 
