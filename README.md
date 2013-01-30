@@ -1,5 +1,8 @@
 Simple Persistence for Clojure
-========================
+==============================
+
+Description
+------------
 
 Simple Persistence for Clojure is a journal-based persistence library for Clojure programs. It follows the "Prevalent system" design pattern.
 
@@ -21,72 +24,73 @@ In comparison with Prevayler, this library does not block the reads, because  it
 
 Probably blocking of writes is not important now, when the most of today computers have <=8 cores and the typical usage pattern is that there are an order of magnitude more reads than writes.
 
-Usage examples:
+Usage examples
+---------------
 
 1. first run
 
-(use 'persister.core)
+	(use 'persister.core)
 
-(def refx (ref 0))
-(def refy (ref 0))
-(def refs (ref {}))
+	(def refx (ref 0))
+	(def refy (ref 0))
+	(def refs (ref {}))
 
-(defn tr-fn [x y]
-   (do
-       (alter refx + x)
-       (alter refy + y) ))
+	(defn tr-fn [x y]
+	   (do
+	       (alter refx + x)
+	       (alter refy + y) ))
 
-(defn tr-fn-swap []
-   (let [tmp @refx]
-       (ref-set refx @refy)
-       (ref-set refy tmp)))
+	(defn tr-fn-swap []
+	   (let [tmp @refx]
+	       (ref-set refx @refy)
+	       (ref-set refy tmp)))
 
-(defn tr-inc []
-   (ref-set refx (inc @refx))
-   (ref-set refy (inc @refy)) )
+	(defn tr-inc []
+	   (ref-set refx (inc @refx))
+	   (ref-set refy (inc @refy)) )
 
-(defn tr-set-s [new-s]
-    (ref-set refs new-s) )
+	(defn tr-set-s [new-s]
+	    (ref-set refs new-s) )
 
-(init-db)
-(apply-transaction tr-fn 1 2)
-(apply-transaction tr-fn 10 20)
-(apply-transaction tr-fn-swap)
-(apply-transaction tr-inc)
-(apply-transaction tr-set-s {:a :bb "key" #{"val1" :val2}})
-[refx refy refs]
+	(init-db)
+	(apply-transaction tr-fn 1 2)
+	(apply-transaction tr-fn 10 20)
+	(apply-transaction tr-fn-swap)
+	(apply-transaction tr-inc)
+	(apply-transaction tr-set-s {:a :bb "key" #{"val1" :val2}})
+	[refx refy refs]
 
-[#<Ref@5976c2: 23> #<Ref@183e7de: 12> #<Ref@112e7f7: {:a :bb, "key" #{:val2 "val1"}}>]
+	[#<Ref@5976c2: 23> #<Ref@183e7de: 12> #<Ref@112e7f7: {:a :bb, "key" #{:val2 "val1"}}>]
 
 2. the second run
 
-(use 'persister.core)
+	(use 'persister.core)
 
-(def refx (ref 0))
-(def refy (ref 0))
-(def refs (ref {}))
+	(def refx (ref 0))
+	(def refy (ref 0))
+	(def refs (ref {}))
 
-(defn tr-fn [x y]
-   (do
-       (alter refx + x)
-       (alter refy + y) ))
+	(defn tr-fn [x y]
+	   (do
+	       (alter refx + x)
+	       (alter refy + y) ))
 
-(defn tr-fn-swap []
-   (let [tmp @refx]
-       (ref-set refx @refy)
-       (ref-set refy tmp)))
+	(defn tr-fn-swap []
+	   (let [tmp @refx]
+	       (ref-set refx @refy)
+	       (ref-set refy tmp)))
 
-(defn tr-inc []
-   (ref-set refx (inc @refx))
-   (ref-set refy (inc @refy)) )
+	(defn tr-inc []
+	   (ref-set refx (inc @refx))
+	   (ref-set refy (inc @refy)) )
 
-(defn tr-set-s [new-s]
-    (ref-set refs new-s) )
+	(defn tr-set-s [new-s]
+	    (ref-set refs new-s) )
 
-(init-db)
-[refx refy refs]
+	(init-db)
+	[refx refy refs]
 
-[#<Ref@10fe2b9: 23> #<Ref@1ee148b: 12> #<Ref@186d484: {:a :bb, "key" #{:val2 "val1"}}>]
+	[#<Ref@10fe2b9: 23> #<Ref@1ee148b: 12> #<Ref@186d484: {:a :bb, "key" #{:val2 "val1"}}>]
 
 
 Note that journaled functions must be accessible in the current namespace when you replay transactions.
