@@ -24,6 +24,12 @@ In comparison with Prevayler, this library does not block the reads, because  it
 
 Probably blocking of writes is not important now, when the most of today computers have <=8 cores and the typical usage pattern is that there are an order of magnitude more reads than writes.
 
+Installation
+------------
+Simply add this to your dependencies:
+	[persister "1.0.1"]
+	
+
 Usage examples
 ---------------
 
