@@ -27,6 +27,7 @@ Probably blocking of writes is not important now, when the most of today compute
 Installation
 ------------
 Simply add this to your dependencies:
+
 	[persister "1.0.1"]
 	
 
